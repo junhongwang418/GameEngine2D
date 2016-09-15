@@ -19,6 +19,8 @@ public class Sprite {
     private float width;
     private float height;
 
+    private Texture texture;
+
     private int vaoID;
     private List<Integer> vboIDs = new ArrayList<Integer>();
 
@@ -30,7 +32,9 @@ public class Sprite {
 
     }
 
-    public void init() {
+    public void init(String textureFilePath) throws Exception {
+
+        texture = new Texture(textureFilePath);
 
         float[] vertices = {
                 x, y + height,
@@ -45,14 +49,22 @@ public class Sprite {
                 3, 1, 2
         };
 
-        loadToVAO(vertices, indices);
+        float[] textureCoords = {
+                0, 0,
+                0, 1,
+                1, 1,
+                1, 0
+        };
+
+        loadToVAO(vertices, textureCoords, indices);
 
     }
 
-    public void loadToVAO(float[] positions, int[] indices) {
+    public void loadToVAO(float[] positions, float[] textureCoords, int[] indices) {
         vaoID = createVAO();
         bindIndicesBuffer(indices);
         storeDataInAttributeList(0, positions);
+        storeDataInAttributeList(1, textureCoords);
         unbindVAO();
     }
 
@@ -108,5 +120,9 @@ public class Sprite {
         buffer.put(data);
         buffer.flip();
         return buffer;
+    }
+
+    public Texture getTexture() {
+        return texture;
     }
 }

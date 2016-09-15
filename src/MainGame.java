@@ -16,7 +16,7 @@ public class MainGame implements IGameLogic {
     @Override
     public void init() throws Exception {
 
-        sprite.init();
+        sprite.init("flag.png");
         shader = new StaticShader();
 
     }
