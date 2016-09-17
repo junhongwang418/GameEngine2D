@@ -55,11 +55,9 @@ public class Window {
         glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
         glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
-        int WIDTH = 300;
-        int HEIGHT = 300;
 
         // Create the window
-        windowHandle = glfwCreateWindow(WIDTH, HEIGHT, "Hello World!", NULL, NULL);
+        windowHandle = glfwCreateWindow(width, height, "Hello World!", NULL, NULL);
         if ( windowHandle == NULL )
             throw new RuntimeException("Failed to create the GLFW window");
 
@@ -74,8 +72,8 @@ public class Window {
         // Center our window
         glfwSetWindowPos(
                 windowHandle,
-                (vidmode.width() - WIDTH) / 2,
-                (vidmode.height() - HEIGHT) / 2
+                (vidmode.width() - width) / 2,
+                (vidmode.height() - height) / 2
         );
 
         // Make the OpenGL context current
@@ -87,6 +85,8 @@ public class Window {
         glfwShowWindow(windowHandle);
 
         GL.createCapabilities();
+
+        System.out.println("**** OpenGL version: " + GL11.glGetString(GL11.GL_VERSION) + " ****");
 
         glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
@@ -108,6 +108,11 @@ public class Window {
         glfwPollEvents();
     }
 
+    public int getWidth() {
+        return width;
+    }
 
-
+    public int getHeight() {
+        return height;
+    }
 }

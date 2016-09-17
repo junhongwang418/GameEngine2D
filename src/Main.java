@@ -1,9 +1,13 @@
+import org.lwjgl.Version;
+
 /**
  * Created by one on 9/11/16.
  */
 public class Main {
 
     public static void main(String[] args) {
+
+        System.out.println("**** Hello LWJGL " + Version.getVersion() + "! ****");
 
         try {
             IGameLogic gameLogic = new MainGame();

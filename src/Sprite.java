@@ -34,7 +34,7 @@ public class Sprite {
 
     public void init(String textureFilePath) throws Exception {
 
-        texture = new Texture(textureFilePath);
+        texture = TextureCache.getTexture(textureFilePath);
 
         float[] vertices = {
                 x, y + height,
