@@ -17,7 +17,7 @@ import static org.lwjgl.system.MemoryUtil.NULL;
  */
 public class Window {
 
-    private final String title;
+    private String title;
 
     private int width;
 
@@ -58,7 +58,7 @@ public class Window {
 
 
         // Create the window
-        windowHandle = glfwCreateWindow(width, height, "Hello World!", NULL, NULL);
+        windowHandle = glfwCreateWindow(width, height, title, NULL, NULL);
         if ( windowHandle == NULL )
             throw new RuntimeException("Failed to create the GLFW window");
 
@@ -89,7 +89,7 @@ public class Window {
 
         System.out.println("**** OpenGL version: " + GL11.glGetString(GL11.GL_VERSION) + " ****");
 
-        glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
+        glClearColor((float)92/255, (float)148/255, (float)252/255, 0.0f);
 
         //Enable alpha blend
         glEnable(GL_BLEND);
@@ -119,6 +119,10 @@ public class Window {
 
     public int getHeight() {
         return height;
+    }
+
+    public long getWindowHandle() {
+        return windowHandle;
     }
 
 }

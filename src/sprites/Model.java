@@ -72,6 +72,27 @@ public class Model {
         vaoID = Loader.loadToVAO(vertices, textureCoords, indices);
     }
 
+    public Model(float width, float height, String textureFilePath, int numRows, float[] textureCoords) throws Exception {
+        this.width = width;
+        this.height = height;
+        this.texture = TextureCache.getTexture(textureFilePath, numRows);
+
+        float[] vertices = {
+                0, height,
+                0, 0,
+                width, 0,
+                width, height
+
+        };
+
+        int[] indices = {
+                0, 1, 3,
+                3, 1, 2
+        };
+
+        vaoID = Loader.loadToVAO(vertices, textureCoords, indices);
+    }
+
     public Texture getTexture() {
         return texture;
     }

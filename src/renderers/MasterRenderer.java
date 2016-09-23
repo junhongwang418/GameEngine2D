@@ -17,14 +17,18 @@ public class MasterRenderer {
 
     private Renderer renderer;
 
+
     private Map<Model, List<Sprite>> sprites = new HashMap<Model, List<Sprite>>();
+
 
     public MasterRenderer() {
         renderer = new Renderer();
+
     }
 
     public void init() {
         renderer.init();
+
     }
 
     public void render(Camera camera, Player player) {
@@ -35,7 +39,10 @@ public class MasterRenderer {
         renderer.render(sprites);
         renderer.render(player);
         renderer.getShader().stop();
+
+
         sprites.clear();
+
     }
 
     public void processSprite(Sprite sprite) {
@@ -52,6 +59,7 @@ public class MasterRenderer {
 
     public void cleanUp() {
         renderer.cleanUp();
+
     }
 
 }

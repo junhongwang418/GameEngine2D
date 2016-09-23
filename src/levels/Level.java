@@ -1,5 +1,6 @@
 package levels;
 
+import gameItems.Tile;
 import org.joml.Vector2f;
 import sprites.Model;
 import sprites.Sprite;
@@ -16,9 +17,12 @@ import java.util.List;
  */
 public class Level {
 
-    private List<String> levelData = new ArrayList<String>();
+    private char[][] levelData;
 
     public Level(String fileName) {
+
+        List<String> data = new ArrayList<String>();
+
         try {
             FileReader fileReader = new FileReader("res/"+fileName);
 
@@ -27,7 +31,7 @@ public class Level {
             String line = null;
 
             while ((line = bufferedReader.readLine()) != null) {
-                levelData.add(line);
+                data.add(line);
             }
 
 
@@ -38,30 +42,37 @@ public class Level {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        levelData = new char[data.size()][];
+        for (int i = 0; i < data.size(); i++) {
+            char[] charArray = data.get(i).toCharArray();
+            levelData[i] = new char[charArray.length];
+            levelData[i] = charArray;
+        }
+
     }
 
-    public void init(List<Sprite> sprites, Model model) {
-        for (int y = 0; y < levelData.size(); y++) {
-            char[] charData = levelData.get(y).toCharArray();
-            for (int x = 0; x < charData.length; x++) {
-                switch (charData[x]) {
+    public void init(List<Sprite> sprites) throws Exception {
+        for (int y = 0; y < levelData.length; y++) {
+            for (int x = 0; x < levelData[y].length; x++) {
+                switch (levelData[y][x]) {
                     case '#':
                         System.out.print('#');
-                        Sprite sprite0 = new Sprite(new Vector2f(x*50, y*50), 0);
-                        sprite0.init(model);
-                        sprites.add(sprite0);
+                        Tile tile = new Tile(new Vector2f(x*Tile.SIZE, y*Tile.SIZE), 1);
+                        tile.init();
+                        sprites.add(tile);
                         break;
                     case '.':
                         System.out.print('.');
-                        Sprite sprite1 = new Sprite(new Vector2f(x*50, y*50), 1);
-                        sprite1.init(model);
-                        sprites.add(sprite1);
+//                        Tile tile2 = new Tile(new Vector2f(x*Tile.SIZE, y*Tile.SIZE), 0);
+//                        tile2.init();
+//                        sprites.add(tile2);
                         break;
                     case 'W':
                         System.out.print('W');
-                        Sprite sprite3 = new Sprite(new Vector2f(x*50, y*50), 3);
-                        sprite3.init(model);
-                        sprites.add(sprite3);
+                        Tile tile3 = new Tile(new Vector2f(x*Tile.SIZE, y*Tile.SIZE), 24);
+                        tile3.init();
+                        sprites.add(tile3);
                         break;
                     default:
                         break;
@@ -69,6 +80,10 @@ public class Level {
             }
             System.out.println();
         }
+    }
+
+    public char[][] getLevelData() {
+        return levelData;
     }
 
 }

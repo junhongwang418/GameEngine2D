@@ -28,7 +28,6 @@ public class Renderer {
         GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
     }
 
-
     public void render(Map<Model, List<Sprite>> sprites) {
         for (Model model:sprites.keySet()) {
             prepareModel(model);

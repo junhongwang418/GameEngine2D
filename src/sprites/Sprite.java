@@ -8,7 +8,7 @@ import org.joml.Vector3f;
  */
 public class Sprite {
 
-    private Vector2f position;
+    protected Vector2f position;
 
     private Vector3f rotation;
 

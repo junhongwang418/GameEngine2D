@@ -3,6 +3,8 @@ package game;
 import utils.Timer;
 import utils.Window;
 
+import static org.lwjgl.glfw.GLFW.*;
+
 /**
  * Created by one on 9/17/16.
  */
@@ -67,7 +69,9 @@ public class GameEngine implements Runnable {
 //        }
         while (!window.windowShouldClose()) {
             long now = Timer.getTime();
-            Timer.delta += (now - Timer.lastTime) / Timer.nanoSeconds;
+
+            Timer.elapsedTime = (now - Timer.lastTime) / Timer.nanoSeconds;
+            Timer.delta += Timer.elapsedTime;
             Timer.lastTime = now;
 
             input();
@@ -82,9 +86,9 @@ public class GameEngine implements Runnable {
 
             Timer.frames++;
 
-            if (System.currentTimeMillis() -Timer.timer > 1000) {
+            if (System.currentTimeMillis() - Timer.timer > 1000) {
                 Timer.timer += 1000;
-                System.out.println(Timer.updates + " ups, " + Timer.frames + " fps");
+                glfwSetWindowTitle(window.getWindowHandle(), "Game: "+Timer.updates + " ups | " + Timer.frames + " fps");
                 Timer.updates = 0;
                 Timer.frames = 0;
             }

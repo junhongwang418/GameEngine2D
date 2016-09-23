@@ -5,6 +5,7 @@ package utils;
  */
 public class Timer {
 
+
     public static long lastTime = System.nanoTime();
 
     public static double delta = 0.0;
@@ -20,6 +21,8 @@ public class Timer {
     public static long getTime() {
         return System.nanoTime();
     }
+
+    public static double elapsedTime = 0;
 
 
 }
