@@ -9,4 +9,5 @@
 - [OpenAL 3D Audio Tutorials by ThinMatrix](https://www.youtube.com/playlist?list=PLRIWtICgwaX2VNpAFjAZdlQw2pA1-5kU8)
 
 # ScreenShot
-<img width="602" alt="screen shot 2016-09-17 at 10 27 46 pm" src="https://cloud.githubusercontent.com/assets/21322866/18613075/3dc541f8-7d26-11e6-832b-6be20b994eb2.png">
+<img width="601" alt="screen shot 2016-09-24 at 1 31 05 pm" src="https://cloud.githubusercontent.com/assets/21322866/18811070/359f8026-825b-11e6-8575-54e2e2cdb193.png">
+
