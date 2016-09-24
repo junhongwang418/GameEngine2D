@@ -22,7 +22,7 @@ public class Player extends Sprite {
 
     public float jumpPower = 0;
 
-    public static final float SIZE = 30;
+    public static final float SIZE = 40;
 
     private static final int TEXTURE_NUM_ROWS = 8;
 
@@ -44,6 +44,7 @@ public class Player extends Sprite {
         isInAir = true;
 
     }
+
 
     public void fall() {
 

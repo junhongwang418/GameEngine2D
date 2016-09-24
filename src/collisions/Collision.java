@@ -20,27 +20,20 @@ public class Collision {
         List<Vector2f> collideTilePosition = new ArrayList<Vector2f>(); // center of the tile
 
         // check four corners
-        // First corner
-        // Second corner
-        if (checkTilePosition(player.getPosition().x, player.getPosition().y, levelData, collideTilePosition)
-                && checkTilePosition(player.getPosition().x + Player.SIZE, player.getPosition().y, levelData, collideTilePosition)) {
+        boolean bottomLeft = checkTilePosition(player.getPosition().x, player.getPosition().y, levelData, collideTilePosition);
+        boolean bottomRight = checkTilePosition(player.getPosition().x + Player.SIZE, player.getPosition().y, levelData, collideTilePosition);
+
+        if (bottomLeft && bottomRight) {
             player.setInAir(false);
             player.getVelocity().y = 0;
         }
 
+        boolean upperLeft = checkTilePosition(player.getPosition().x, player.getPosition().y + Player.SIZE, levelData, collideTilePosition);
+        boolean upperRight = checkTilePosition(player.getPosition().x + Player.SIZE, player.getPosition().y + Player.SIZE, levelData, collideTilePosition);
 
-
-
-        // Third Corner
-        // Fourth corner
-        if (checkTilePosition(player.getPosition().x, player.getPosition().y + Player.SIZE, levelData, collideTilePosition)
-                &&
-                checkTilePosition(player.getPosition().x + Player.SIZE, player.getPosition().y + Player.SIZE, levelData, collideTilePosition)) {
+        if (upperLeft && upperRight) {
             player.getVelocity().y = -0.8f*player.getVelocity().y;
         }
-
-
-
 
         for (int i = 0; i < collideTilePosition.size(); i++) {
             collideWithTile(player, collideTilePosition.get(i));
@@ -52,7 +45,10 @@ public class Collision {
 
         Vector2i cornerPos = new Vector2i((int)(x / Tile.SIZE), (int)(y / Tile.SIZE));
 
+
+
         if (levelData[cornerPos.y][cornerPos.x] != '.') {
+
             collideTilePosition.add(new Vector2f(cornerPos.x * Tile.SIZE + Tile.SIZE/2, cornerPos.y * Tile.SIZE + Tile.SIZE/2));
             return true;
         }
@@ -78,6 +74,7 @@ public class Collision {
 
 
         if (xDepth > 0 || yDepth > 0) {
+
             if (Math.max(xDepth, 0) < Math.max(yDepth, 0)) {
                 if (distance.x > 0) {
                     player.increasePosition(-xDepth, 0);

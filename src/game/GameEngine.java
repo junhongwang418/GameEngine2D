@@ -48,25 +48,8 @@ public class GameEngine implements Runnable {
     }
 
     protected void gameLoop() {
-//        float elapsedTime;
-//        float accumulator = 0f;
+
         float interval = 1f / TARGET_UPS;
-//
-//        boolean running = true;
-//        while (running && !window.windowShouldClose()) {
-//            elapsedTime = timer.getElapsedTime();
-//            accumulator += elapsedTime;
-//
-//            input();
-//
-//            while (accumulator >= interval) {
-//                update(interval);
-//                accumulator -= interval;
-//            }
-//
-//            render();
-//
-//        }
         while (!window.windowShouldClose()) {
             long now = Timer.getTime();
 

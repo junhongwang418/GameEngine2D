@@ -9,7 +9,7 @@ import sprites.Sprite;
  */
 public class Tile extends Sprite {
 
-    public static final float SIZE = 30;
+    public static final float SIZE = 40;
 
     private static final String TEXTURE_FILE_PATH = "/blocks.png";
 

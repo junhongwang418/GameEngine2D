@@ -19,9 +19,9 @@ public class Window {
 
     private String title;
 
-    private int width;
+    private static int width;
 
-    private int height;
+    private static int height;
 
     private long windowHandle;
 
@@ -113,11 +113,11 @@ public class Window {
         glfwPollEvents();
     }
 
-    public int getWidth() {
+    public static int getWidth() {
         return width;
     }
 
-    public int getHeight() {
+    public static int getHeight() {
         return height;
     }
 

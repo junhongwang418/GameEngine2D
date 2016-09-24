@@ -1,5 +1,7 @@
 package utils;
 
+import gameItems.Player;
+import gameItems.Tile;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
@@ -63,7 +65,6 @@ public class Camera {
             cameraMatrix = new Matrix4f().identity().scale(scale, scale, 0).mul(orthoMatrix).mul(viewMatrix);
         }
     }
-
 
     public void setPosition(Vector2f position) {
         this.position = position;

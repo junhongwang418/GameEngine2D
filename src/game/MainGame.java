@@ -2,14 +2,19 @@ package game;
 
 import animations.PlayerAnimation;
 import collisions.Collision;
+import fontMeshCreator.FontType;
+import fontMeshCreator.GUIText;
+import fontRendering.TextMaster;
 import gameItems.Player;
 import levels.Level;
 import org.joml.Vector2f;
 import renderers.MasterRenderer;
 import sprites.Model;
 import sprites.Sprite;
+import sprites.TextureCache;
 import utils.*;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,20 +53,52 @@ public class MainGame implements IGameLogic {
         Model model = new Model(20, 20, "/blocks.png", 8);
         level.init(sprites);
         player.init();
+        TextMaster.init();
+
+
+        FontType font = new FontType(TextureCache.getTexture("/arial.png").getId(), new File("res/arial.fnt"));
+
+        String lyrics =
+                "I remember when we broke up the first time " +
+                "Saying, This is it, I've had enough, cause like " +
+                "We hadn't seen each other in a month " +
+                "When you said you needed space. (What?) " +
+                "Then you come around again and say " +
+                " Baby, I miss you and I swear I'm gonna change, trust me. " +
+                "Remember how that lasted for a day? " +
+                "I say,  I hate you, we break up, you call me, I love you." +
+                "Ooh, we called it off again last night" +
+                "But ooh, this time I'm telling you, I'm telling you" +
+                "We are never ever ever getting back together," +
+                "We are never ever ever getting back together," +
+                "You go talk to your friends, talk to my friends, talk to me" +
+                "But we are never ever ever ever getting back together" +
+                "Like, ever..." + "I'm really gonna miss you picking fights" +
+                "And me falling for it screaming that I'm right" +
+                "And you would hide away and find your peace of mind" +
+                "With some indie record that's much cooler than mine" +
+                "Ooh, you called me up again tonight" +
+                "But ooh, this time I'm telling you, I'm telling you" +
+                "We are never, ever, ever, ever getting back together" +
+                "We are never, ever, ever, ever getting back together" +
+                "You go talk to your friends, talk to my friends, talk to me" +
+                "But we are never ever ever ever getting back together";
+        
+        GUIText text = new GUIText(lyrics, 1, font, new Vector2f(0f,0f), 1f, false);
 
     }
 
     @Override
     public void input(Window window) {
         if (window.isKeyPressed(GLFW_KEY_W)) {
-            player.increasePosition(0, 5*(float)Timer.elapsedTime);
+            player.increasePosition(0, 0);
 
         }
         if (window.isKeyPressed(GLFW_KEY_S)) {
             player.increasePosition(0, 5*-(float)Timer.elapsedTime);
         }
         if (window.isKeyPressed(GLFW_KEY_A)) {
-            player.increasePosition(5*-(float)Timer.elapsedTime, 0);
+            player.increasePosition(-5*(float)Timer.elapsedTime, 0);
             player.animate(PlayerAnimation.GO_RIGHT);
 
         } else if (window.isKeyPressed(GLFW_KEY_D)) {
@@ -83,10 +120,11 @@ public class MainGame implements IGameLogic {
 
         if (player.isInAir()) {
             player.animate(PlayerAnimation.JUMP);
+
         }
 
-
         player.fall();
+
 
         Collision.collideWithLevel(player, level.getLevelData());
 
@@ -116,12 +154,14 @@ public class MainGame implements IGameLogic {
 
 
         renderer.render(camera, player);
+        TextMaster.render();
     }
 
     @Override
     public void cleanUp() {
         loader.cleanUp();
         renderer.cleanUp();
+        TextMaster.cleanUp();
     }
 
 }
