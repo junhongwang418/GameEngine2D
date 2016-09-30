@@ -19,40 +19,40 @@ public class PlayerAnimation extends Animation {
     public void nextFrame(int type) {
 
         switch (type) {
-            case GO_RIGHT:
+            case GO_LEFT:
                 if (((Player)sprite).isFacingRight()) {
-                    currentFrame = 11;
+                    currentFrame = 16;
                     ((Player)sprite).setFacingRight(false);
                 }
-                if (currentFrame >= 21) {
-                    currentFrame = 11;
+                if (currentFrame <= 10) {
+                    currentFrame = 16;
                 }
-                ((Player)sprite).setTextureIndex(++currentFrame);
+                ((Player)sprite).setTextureIndex(--currentFrame);
                 break;
-            case GO_LEFT:
+            case GO_RIGHT:
                 if (!((Player)sprite).isFacingRight()) {
-                    currentFrame = 1;
+                    currentFrame = 0;
                     ((Player)sprite).setFacingRight(true);
                 }
-                if (currentFrame >= 10) {
-                    currentFrame = 1;
+                if (currentFrame >= 4) {
+                    currentFrame = 0;
                 }
                 ((Player)sprite).setTextureIndex(++currentFrame);
                 break;
             case JUMP:
                 if (((Player)sprite).isFacingRight()) {
                     if (((Player)sprite).getVelocity().y < 0) {
-                        currentFrame = 23;
+                        currentFrame = 7;
                     } else {
-                        currentFrame = 22;
+                        currentFrame = 6;
                     }
 
                 } else {
 
                     if (((Player)sprite).getVelocity().y < 0) {
-                        currentFrame = 28;
+                        currentFrame = 8;
                     } else {
-                        currentFrame = 27;
+                        currentFrame = 9;
                     }
 
                 }

@@ -5,6 +5,9 @@ import gameItems.Player;
 import gameItems.Tile;
 import org.joml.Vector2f;
 import org.joml.Vector2i;
+import org.joml.Vector3f;
+import particles.ParticleBatch;
+import particles.ParticleEngine;
 import sprites.Sprite;
 
 import java.util.ArrayList;
@@ -15,7 +18,7 @@ import java.util.List;
  */
 public class Collision {
 
-    public static void collideWithLevel(Player player, char[][] levelData) {
+    public static void collideWithLevel(Player player, char[][] levelData, ParticleBatch particleBatch) {
 
         List<Vector2f> collideTilePosition = new ArrayList<Vector2f>(); // center of the tile
 
@@ -23,7 +26,7 @@ public class Collision {
         boolean bottomLeft = checkTilePosition(player.getPosition().x, player.getPosition().y, levelData, collideTilePosition);
         boolean bottomRight = checkTilePosition(player.getPosition().x + Player.SIZE, player.getPosition().y, levelData, collideTilePosition);
 
-        if (bottomLeft && bottomRight) {
+        if (bottomLeft || bottomRight) {
             player.setInAir(false);
             player.getVelocity().y = 0;
         }
@@ -31,8 +34,9 @@ public class Collision {
         boolean upperLeft = checkTilePosition(player.getPosition().x, player.getPosition().y + Player.SIZE, levelData, collideTilePosition);
         boolean upperRight = checkTilePosition(player.getPosition().x + Player.SIZE, player.getPosition().y + Player.SIZE, levelData, collideTilePosition);
 
-        if (upperLeft && upperRight) {
+        if (upperLeft || upperRight) {
             player.getVelocity().y = -0.8f*player.getVelocity().y;
+            particleBatch.addParticle(new Vector2f(player.getPosition().x + Player.SIZE/2 - particleBatch.SIZE/2, player.getPosition().y + Player.SIZE/2), new Vector2f(0, 1), new Vector3f(0, 0, 0));
         }
 
         for (int i = 0; i < collideTilePosition.size(); i++) {
@@ -55,8 +59,6 @@ public class Collision {
 
         return false;
 
-
-
     }
 
     // AABB collision
@@ -73,9 +75,9 @@ public class Collision {
         float yDepth = MIN_DISTANCE - Math.abs(distance.y);
 
 
-        if (xDepth > 0 || yDepth > 0) {
+        if (xDepth > 0 && yDepth > 0) {
 
-            if (Math.max(xDepth, 0) < Math.max(yDepth, 0)) {
+            if (xDepth < yDepth) {
                 if (distance.x > 0) {
                     player.increasePosition(-xDepth, 0);
                 } else {
@@ -89,6 +91,9 @@ public class Collision {
                 }
 
             }
+
+
+
         }
 
 

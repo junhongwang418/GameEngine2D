@@ -23,9 +23,9 @@ public class Camera {
 
     private float scale;
 
-    private int screenWidth;
+    private static int screenWidth;
 
-    private int screenHeight;
+    private static int screenHeight;
 
     public Camera() {
         position = new Vector2f(0, 0);
@@ -64,6 +64,29 @@ public class Camera {
 
             cameraMatrix = new Matrix4f().identity().scale(scale, scale, 0).mul(orthoMatrix).mul(viewMatrix);
         }
+    }
+
+    public boolean isBoxInView(Vector2f position, Vector2f dimentions) {
+
+        final float MIN_DISTANCE_X = dimentions.x / 2.0f + screenWidth / 2.0f;
+        final float MIN_DISTANCE_Y = dimentions.y / 2.0f + screenHeight / 2.0f;
+
+        Vector2f centerPosition = new Vector2f(position.x + dimentions.x / 2.0f, position.y + dimentions.y / 2.0f);
+        Vector2f centerCamPos = this.position;
+        Vector2f distance = new Vector2f(centerPosition.x - centerCamPos.x, centerPosition.y - centerCamPos.y);
+
+
+
+        float xDepth = MIN_DISTANCE_X - Math.abs(distance.x);
+        float yDepth = MIN_DISTANCE_Y - Math.abs(distance.y);
+
+        if (xDepth > 0 || yDepth > 0) {
+
+            return true;
+        }
+
+        return false;
+
     }
 
     public void setPosition(Vector2f position) {

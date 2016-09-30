@@ -58,7 +58,7 @@ public class Level {
                 switch (levelData[y][x]) {
                     case '#':
                         System.out.print('#');
-                        Tile tile = new Tile(new Vector2f(x*Tile.SIZE, y*Tile.SIZE), 1);
+                        Tile tile = new Tile(new Vector2f(x*Tile.SIZE, y*Tile.SIZE), 0);
                         tile.init();
                         sprites.add(tile);
                         break;
@@ -70,7 +70,7 @@ public class Level {
                         break;
                     case 'W':
                         System.out.print('W');
-                        Tile tile3 = new Tile(new Vector2f(x*Tile.SIZE, y*Tile.SIZE), 24);
+                        Tile tile3 = new Tile(new Vector2f(x*Tile.SIZE, y*Tile.SIZE), 0);
                         tile3.init();
                         sprites.add(tile3);
                         break;

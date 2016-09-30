@@ -2,12 +2,17 @@ package game;
 
 import animations.PlayerAnimation;
 import collisions.Collision;
-import fontMeshCreator.FontType;
-import fontMeshCreator.GUIText;
-import fontRendering.TextMaster;
+import guis.GuiRenderer;
+import guis.GuiTexture;
+import guis.fontMeshCreator.FontType;
+import guis.fontMeshCreator.GUIText;
+import guis.fontRendering.TextMaster;
 import gameItems.Player;
 import levels.Level;
 import org.joml.Vector2f;
+import org.joml.Vector3f;
+import particles.ParticleBatch;
+import particles.ParticleEngine;
 import renderers.MasterRenderer;
 import sprites.Model;
 import sprites.Sprite;
@@ -34,6 +39,12 @@ public class MainGame implements IGameLogic {
     private Level level;
     private Player player;
 
+    private GuiRenderer guiRenderer;
+    List<GuiTexture> guis = new ArrayList<GuiTexture>();
+
+    private ParticleBatch particleBatch;
+    private ParticleEngine particleEngine;
+
 
     public MainGame() {
         renderer = new MasterRenderer();
@@ -41,7 +52,11 @@ public class MainGame implements IGameLogic {
         loader = new Loader();
         level = new Level("level.txt");
         player = new Player(new Vector2f(60, 60));
+        guiRenderer = new GuiRenderer();
 
+        particleBatch = new ParticleBatch();
+        particleEngine = new ParticleEngine();
+        particleEngine.addParticleBatch(particleBatch);
     }
 
     @Override
@@ -54,37 +69,32 @@ public class MainGame implements IGameLogic {
         level.init(sprites);
         player.init();
         TextMaster.init();
+        guiRenderer.init();
+
+        particleBatch.init(1000, 0.01f, TextureCache.getTexture("/particleAtlas.png", 4));
 
 
-        FontType font = new FontType(TextureCache.getTexture("/arial.png").getId(), new File("res/arial.fnt"));
+        FontType font = new FontType(TextureCache.getTexture("/candara.png").getId(), new File("res/candara.fnt"));
 
-        String lyrics =
-                "I remember when we broke up the first time " +
-                "Saying, This is it, I've had enough, cause like " +
-                "We hadn't seen each other in a month " +
-                "When you said you needed space. (What?) " +
-                "Then you come around again and say " +
-                " Baby, I miss you and I swear I'm gonna change, trust me. " +
-                "Remember how that lasted for a day? " +
-                "I say,  I hate you, we break up, you call me, I love you." +
-                "Ooh, we called it off again last night" +
-                "But ooh, this time I'm telling you, I'm telling you" +
-                "We are never ever ever getting back together," +
-                "We are never ever ever getting back together," +
-                "You go talk to your friends, talk to my friends, talk to me" +
-                "But we are never ever ever ever getting back together" +
-                "Like, ever..." + "I'm really gonna miss you picking fights" +
-                "And me falling for it screaming that I'm right" +
-                "And you would hide away and find your peace of mind" +
-                "With some indie record that's much cooler than mine" +
-                "Ooh, you called me up again tonight" +
-                "But ooh, this time I'm telling you, I'm telling you" +
-                "We are never, ever, ever, ever getting back together" +
-                "We are never, ever, ever, ever getting back together" +
-                "You go talk to your friends, talk to my friends, talk to me" +
-                "But we are never ever ever ever getting back together";
-        
-        GUIText text = new GUIText(lyrics, 1, font, new Vector2f(0f,0f), 1f, false);
+        GUIText text = new GUIText("MARIO", 2, font, new Vector2f(0.1f,0.01f), 1f, false);
+        text.setColour(1, 1, 1);
+        GUIText text2 = new GUIText("0012345", 2, font, new Vector2f(0.1f, 0.05f), 1f, false);
+        text2.setColour(1, 1, 1);
+        GUIText text3 = new GUIText("WORLD", 2, font, new Vector2f(0.6f, 0.01f), 1f, false);
+        text3.setColour(1, 1, 1);
+        GUIText text4 = new GUIText("1-1", 2, font, new Vector2f(0.65f, 0.05f), 1f, false);
+        text4.setColour(1, 1, 1);
+        GUIText text5 = new GUIText("TIME", 2, font, new Vector2f(0.8f, 0.01f), 1f, false);
+        text5.setColour(1, 1, 1);
+        GUIText text6 = new GUIText("283", 2, font, new Vector2f(0.82f, 0.05f), 1f, false);
+        text6.setColour(1, 1, 1);
+        GUIText text7 = new GUIText("* 3", 2, font, new Vector2f(0.37f, 0.05f), 1f, false);
+        text7.setColour(1, 1, 1);
+
+
+
+        GuiTexture gui = new GuiTexture(TextureCache.getTexture("/player.png").getId(), new Vector2f(-0.3f, 0.83f), new Vector2f(0.05f, 0.05f));
+        guis.add(gui);
 
     }
 
@@ -99,16 +109,16 @@ public class MainGame implements IGameLogic {
         }
         if (window.isKeyPressed(GLFW_KEY_A)) {
             player.increasePosition(-5*(float)Timer.elapsedTime, 0);
-            player.animate(PlayerAnimation.GO_RIGHT);
+            player.animate(PlayerAnimation.GO_LEFT);
 
         } else if (window.isKeyPressed(GLFW_KEY_D)) {
             player.increasePosition(5*(float)Timer.elapsedTime, 0);
-            player.animate(PlayerAnimation.GO_LEFT);
+            player.animate(PlayerAnimation.GO_RIGHT);
         } else {
             if (player.isFacingRight()) {
                 player.setTextureIndex(0);
             } else {
-                player.setTextureIndex(11);
+                player.setTextureIndex(15);
             }
 
         }
@@ -118,6 +128,10 @@ public class MainGame implements IGameLogic {
             }
         }
 
+        if (window.isKeyPressed(GLFW_KEY_P)) {
+            particleBatch.addParticle(new Vector2f(player.getPosition().x + Player.SIZE/2 - particleBatch.SIZE/2, player.getPosition().y + Player.SIZE/2), new Vector2f(0, 1), new Vector3f(0, 0, 0));
+        }
+
         if (player.isInAir()) {
             player.animate(PlayerAnimation.JUMP);
 
@@ -125,43 +139,50 @@ public class MainGame implements IGameLogic {
 
         player.fall();
 
-
-        Collision.collideWithLevel(player, level.getLevelData());
-
-
-
+        Collision.collideWithLevel(player, level.getLevelData(), particleBatch);
 
     }
 
     @Override
     public void update(float interval) {
 
-        camera.setPosition(new Vector2f(player.getPosition().x, 200));
+        particleEngine.update();
+
+        camera.setPosition(new Vector2f(Math.max(300, player.getPosition().x), Math.max(250, player.getPosition().y)));
         camera.update();
-
-
-
-
 
     }
 
     @Override
     public void render(Window window) {
+
         for (Sprite sprite:sprites) {
             renderer.processSprite(sprite);
         }
 
-
-
+        // render sprites
         renderer.render(camera, player);
+
+        // render particles
+        particleEngine.render(camera);
+
+        // render gui textures
+        guiRenderer.render(guis);
+
+        // render gui texts
         TextMaster.render();
+
     }
 
     @Override
     public void cleanUp() {
+
         loader.cleanUp();
         renderer.cleanUp();
         TextMaster.cleanUp();
+        guiRenderer.cleanUp();
+        particleBatch.cleanUp();
+
     }
 
 }

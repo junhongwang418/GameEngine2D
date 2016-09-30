@@ -9,6 +9,15 @@ import org.joml.Vector3f;
  */
 public class Maths {
 
+    public static Matrix4f createTransformationMatrix(Vector2f translation, Vector2f scale) {
+        Matrix4f matrix = new Matrix4f();
+        matrix.identity();
+        matrix.translate(translation.x, translation.y, 0);
+        matrix.scale(new Vector3f(scale.x, scale.y, 1));
+        return matrix;
+
+    }
+
     public static Matrix4f createTransformationMatrix(Vector2f position, Vector3f rotation, float scale) {
         return new Matrix4f()
                 .identity()

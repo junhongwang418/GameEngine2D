@@ -35,6 +35,14 @@ public class Loader {
         unbindVAO();
         return vaoID;
     }
+
+    public static int loadToVAO(float[] positions) {
+        int vaoID = createVAO();
+        storeDataInAttributeList(0, positions);
+        unbindVAO();
+        return vaoID;
+    }
+
     private static int createVAO() {
         int vaoID = GL30.glGenVertexArrays();
         GL30.glBindVertexArray(vaoID);

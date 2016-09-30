@@ -1,6 +1,7 @@
 package renderers;
 
 import gameItems.Player;
+import org.joml.Vector2f;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
 import org.lwjgl.opengl.GL20;
@@ -8,6 +9,7 @@ import org.lwjgl.opengl.GL30;
 import shaders.StaticShader;
 import sprites.Model;
 import sprites.Sprite;
+import utils.Camera;
 import utils.Maths;
 
 import java.util.List;
@@ -28,13 +30,17 @@ public class Renderer {
         GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
     }
 
-    public void render(Map<Model, List<Sprite>> sprites) {
+    public void render(Map<Model, List<Sprite>> sprites, Camera camera) {
         for (Model model:sprites.keySet()) {
             prepareModel(model);
             List<Sprite> batch = sprites.get(model);
             for (Sprite sprite:batch) {
-                prepareInstance(sprite);
-                GL11.glDrawElements(GL11.GL_TRIANGLES, 6, GL11.GL_UNSIGNED_INT, 0);
+                if (camera.isBoxInView(sprite.getPosition(), new Vector2f(sprite.getModel().getWidth(), sprite.getModel().getHeight()))) {
+                    prepareInstance(sprite);
+                    GL11.glDrawElements(GL11.GL_TRIANGLES, 6, GL11.GL_UNSIGNED_INT, 0);
+
+                }
+
             }
             unbindModel();
         }

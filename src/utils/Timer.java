@@ -24,5 +24,14 @@ public class Timer {
 
     public static double elapsedTime = 0;
 
+    public static long lastFrame = getTime();
+
+    public static int getDelta() {
+        long time = getTime();
+        int delta = (int) (time - lastFrame);
+        lastFrame = time;
+        return delta;
+    }
+
 
 }

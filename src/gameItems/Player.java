@@ -24,9 +24,9 @@ public class Player extends Sprite {
 
     public static final float SIZE = 40;
 
-    private static final int TEXTURE_NUM_ROWS = 8;
+    private static final int TEXTURE_NUM_ROWS = 1;
 
-    private static final String TEXTURE_FILE_PATH = "/lock_man.png";
+    private static final String TEXTURE_FILE_PATH = "/struct.png";
 
     public Player(Vector2f position) {
         super(position);

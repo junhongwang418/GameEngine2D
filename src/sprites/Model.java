@@ -101,4 +101,11 @@ public class Model {
         return vaoID;
     }
 
+    public float getWidth() {
+        return width;
+    }
+
+    public float getHeight() {
+        return height;
+    }
 }

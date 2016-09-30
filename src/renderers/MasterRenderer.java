@@ -36,7 +36,7 @@ public class MasterRenderer {
         renderer.prepare();
         renderer.getShader().start();
         renderer.getShader().loadCameraMatrix(camera.getCameraMatrix());
-        renderer.render(sprites);
+        renderer.render(sprites, camera);
         renderer.render(player);
         renderer.getShader().stop();
 

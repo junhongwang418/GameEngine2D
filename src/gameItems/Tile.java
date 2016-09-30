@@ -11,9 +11,9 @@ public class Tile extends Sprite {
 
     public static final float SIZE = 40;
 
-    private static final String TEXTURE_FILE_PATH = "/blocks.png";
+    private static final String TEXTURE_FILE_PATH = "/struct.png";
 
-    private static final int TEXTURE_NUM_ROWS = 8;
+    private static final int TEXTURE_NUM_ROWS = 1;
 
     public Tile(Vector2f position, int index) {
         super(position, index);
