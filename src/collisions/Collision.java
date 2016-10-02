@@ -26,6 +26,7 @@ public class Collision {
         boolean bottomLeft = checkTilePosition(player.getPosition().x, player.getPosition().y, levelData, collideTilePosition);
         boolean bottomRight = checkTilePosition(player.getPosition().x + Player.SIZE, player.getPosition().y, levelData, collideTilePosition);
 
+
         if (bottomLeft || bottomRight) {
             player.setInAir(false);
             player.getVelocity().y = 0;

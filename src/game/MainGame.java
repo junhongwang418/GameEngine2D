@@ -9,6 +9,9 @@ import guis.fontMeshCreator.GUIText;
 import guis.fontRendering.TextMaster;
 import gameItems.Player;
 import levels.Level;
+import lights.Light;
+import lights.LightRenderer;
+import lights.PointLight;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 import particles.ParticleBatch;
@@ -45,6 +48,9 @@ public class MainGame implements IGameLogic {
     private ParticleBatch particleBatch;
     private ParticleEngine particleEngine;
 
+    private LightRenderer lightRenderer;
+    List<PointLight> pointLights = new ArrayList<PointLight>();
+
 
     public MainGame() {
         renderer = new MasterRenderer();
@@ -57,6 +63,8 @@ public class MainGame implements IGameLogic {
         particleBatch = new ParticleBatch();
         particleEngine = new ParticleEngine();
         particleEngine.addParticleBatch(particleBatch);
+
+        lightRenderer = new LightRenderer();
     }
 
     @Override
@@ -70,8 +78,9 @@ public class MainGame implements IGameLogic {
         player.init();
         TextMaster.init();
         guiRenderer.init();
+        lightRenderer.init();
 
-        particleBatch.init(1000, 0.01f, TextureCache.getTexture("/particleAtlas.png", 4));
+        particleBatch.init(1000, 0.01f, TextureCache.getTexture("/cosmic.png", 4));
 
 
         FontType font = new FontType(TextureCache.getTexture("/candara.png").getId(), new File("res/candara.fnt"));
@@ -95,6 +104,9 @@ public class MainGame implements IGameLogic {
 
         GuiTexture gui = new GuiTexture(TextureCache.getTexture("/player.png").getId(), new Vector2f(-0.3f, 0.83f), new Vector2f(0.05f, 0.05f));
         guis.add(gui);
+
+        pointLights.add(new PointLight(new Vector2f(player.getPosition().x + player.SIZE/2, player
+        .getPosition().y + player.SIZE/2), new Vector3f(1, 1, 1), Light.INVERSE_LINEAR_ATTENUATION, 200));
 
     }
 
@@ -151,6 +163,8 @@ public class MainGame implements IGameLogic {
         camera.setPosition(new Vector2f(Math.max(300, player.getPosition().x), Math.max(250, player.getPosition().y)));
         camera.update();
 
+        pointLights.get(0).setPosition(new Vector2f(player.getPosition().x + player.SIZE/2, player.getPosition().y + player.SIZE/2));
+
     }
 
     @Override
@@ -163,6 +177,9 @@ public class MainGame implements IGameLogic {
         // render sprites
         renderer.render(camera, player);
 
+        // render lights
+        lightRenderer.renderPointLights(pointLights, camera);
+
         // render particles
         particleEngine.render(camera);
 
@@ -174,6 +191,8 @@ public class MainGame implements IGameLogic {
 
     }
 
+
+
     @Override
     public void cleanUp() {
 
@@ -182,6 +201,7 @@ public class MainGame implements IGameLogic {
         TextMaster.cleanUp();
         guiRenderer.cleanUp();
         particleBatch.cleanUp();
+        lightRenderer.cleanUp();
 
     }
 

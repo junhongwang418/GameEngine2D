@@ -38,6 +38,10 @@ public class ParticleBatch {
 
     private ParticleShader shader;
 
+    private int vboID;
+
+    private static final int INSTANCE_DATA_LENGTH = 21;
+
     public void init(int maxParticles, float decayRate, Texture texture) {
         this.maxParticles = maxParticles;
         this.decayRate = decayRate;

@@ -14,6 +14,20 @@ public class Model {
 
     private int vaoID;
 
+    // light
+    public Model(float size) throws Exception {
+        this.width = size;
+        this.height = size;
+
+        float[] vertices = {
+                -size/2, size/2,
+                -size/2, -size/2,
+                size/2, size/2,
+                size/2, -size/2
+        };
+
+    }
+
     public Model(float width, float height, String textureFilePath) throws Exception {
 
         this.width = width;
