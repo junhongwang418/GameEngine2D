@@ -9,7 +9,7 @@ import shaders.ShaderProgram;
  */
 public class PointLightShader extends ShaderProgram {
 
-    private static final String VERTEX_FILE = "src/lights/pointLightVertexShader.vert";
+    private static final String VERTEX_FILE = "src/lights/lightVertexShader.vert";
     private static final String FRAGMENT_FILE = "src/lights/pointLightFragmentShader.frag";
 
     private int location_transformationMatrix;

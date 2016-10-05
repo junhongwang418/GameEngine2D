@@ -89,7 +89,7 @@ public class Window {
 
         System.out.println("**** OpenGL version: " + GL11.glGetString(GL11.GL_VERSION) + " ****");
 
-        glClearColor((float)46/255, (float)46/255, (float)46/255, 0.0f);
+        glClearColor((float)92/255, (float)148/255, (float)252/255, 0.0f);
 
         //Enable alpha blend
         glEnable(GL_BLEND);

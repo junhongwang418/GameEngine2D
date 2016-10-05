@@ -14,7 +14,9 @@ public class Sprite {
 
     private Model model;
 
-    private int textureIndex = 0;
+    protected boolean isSolid = true;
+
+    protected int textureIndex = 0;
 
     public Sprite(Vector2f position) {
         this.position = position;

@@ -21,23 +21,23 @@ public class PlayerAnimation extends Animation {
         switch (type) {
             case GO_LEFT:
                 if (((Player)sprite).isFacingRight()) {
-                    currentFrame = 16;
+                    currentFrame = 0;
                     ((Player)sprite).setFacingRight(false);
                 }
-                if (currentFrame <= 10) {
-                    currentFrame = 16;
+                if (currentFrame >= 3) {
+                    currentFrame = 0;
                 }
-                ((Player)sprite).setTextureIndex(--currentFrame);
+                ((Player)sprite).setTextureIndex(currentFrame++);
                 break;
             case GO_RIGHT:
                 if (!((Player)sprite).isFacingRight()) {
                     currentFrame = 0;
                     ((Player)sprite).setFacingRight(true);
                 }
-                if (currentFrame >= 4) {
+                if (currentFrame >= 3) {
                     currentFrame = 0;
                 }
-                ((Player)sprite).setTextureIndex(++currentFrame);
+                ((Player)sprite).setTextureIndex(currentFrame++);
                 break;
             case JUMP:
                 if (((Player)sprite).isFacingRight()) {

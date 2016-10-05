@@ -13,12 +13,22 @@ public class SpotLight extends Light {
 
     private float coneAngle;
 
-    public SpotLight(Vector2f position, Vector3f color, Vector2f direction, float coneAngle) {
-        super(position, color);
+    private float size;
+
+    public SpotLight(Vector2f position, Vector3f color, Vector2f direction, int attenuationType, float coneAngle, float size) {
+        super(position, color, attenuationType);
         this.direction = direction;
         this.coneAngle = coneAngle;
+        this.size = size;
     }
 
+    public float getSize() {
+        return size;
+    }
+
+    public void setSize(float size) {
+        this.size = size;
+    }
 
     public Vector2f getDirection() {
         return direction;

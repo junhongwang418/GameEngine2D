@@ -25,12 +25,13 @@ public class Maths {
 
     }
 
-    public static Matrix4f createTransformationMatrix(Vector2f position, float scale) {
+    public static Matrix4f createTransformationMatrix(Vector2f position, float degree) {
         return new Matrix4f()
                 .identity()
                 .translate(position.x, position.y, 0)
-                .scale(scale);
-
+                .rotate(degree, new Vector3f(0, 0, 1));
     }
+
+
 
 }

@@ -9,11 +9,11 @@ import sprites.Sprite;
  */
 public class Tile extends Sprite {
 
-    public static final float SIZE = 40;
+    public static final float SIZE = 20;
 
-    private static final String TEXTURE_FILE_PATH = "/struct.png";
+    private static final String TEXTURE_FILE_PATH = "/blocks.png";
 
-    private static final int TEXTURE_NUM_ROWS = 1;
+    private static final int TEXTURE_NUM_ROWS = 8;
 
     public Tile(Vector2f position, int index) {
         super(position, index);

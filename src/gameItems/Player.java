@@ -22,11 +22,15 @@ public class Player extends Sprite {
 
     public float jumpPower = 0;
 
-    public static final float SIZE = 40;
+    public static final float SIZE = 20;
 
-    private static final int TEXTURE_NUM_ROWS = 1;
+    public static final float WIDTH = 20;
 
-    private static final String TEXTURE_FILE_PATH = "/struct.png";
+    public static final float HEIGHT = 20;
+
+    private static final int TEXTURE_NUM_ROWS = 8;
+
+    private static final String TEXTURE_FILE_PATH = "/small_mario.png";
 
     public Player(Vector2f position) {
         super(position);
@@ -36,6 +40,10 @@ public class Player extends Sprite {
 
     public void init() throws Exception {
         super.init(new Model(SIZE, SIZE, TEXTURE_FILE_PATH, TEXTURE_NUM_ROWS));
+    }
+
+    public void init2() throws Exception {
+        super.init(new Model(WIDTH, HEIGHT, TEXTURE_FILE_PATH, TEXTURE_NUM_ROWS));
     }
 
     public void jump() {

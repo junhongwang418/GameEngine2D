@@ -25,6 +25,7 @@ public class LightRenderer {
         float[] positions = { -1, 1, -1, -1, 1, 1, 1, 1, -1, -1, 1, -1 };
         vaoID = Loader.loadToVAO(positions);
         pointLightShader = new PointLightShader();
+        spotLightShader = new SpotLightShader();
     }
 
     public void render(List<PointLight> pointLights, List<SpotLight> spotLights, Camera camera) {
@@ -36,7 +37,29 @@ public class LightRenderer {
     }
 
     public void renderSpotLights(List<SpotLight> spotLights, Camera camera) {
+        spotLightShader.start();
 
+        GL30.glBindVertexArray(vaoID);
+        GL20.glEnableVertexAttribArray(0);
+        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE);
+        // render
+        spotLightShader.loadCameraMatrix(camera.getCameraMatrix());
+        for (SpotLight spotLight:spotLights) {
+            Matrix4f matrix = Maths.createTransformationMatrix(spotLight.getPosition(), spotLight.getSize());
+            spotLightShader.loadTransformationMatrix(matrix);
+            spotLightShader.loadColor(spotLight.getColor());
+            spotLightShader.loadAttenuationType(spotLight.getAttenuationType());
+            spotLightShader.loadConeAngle(spotLight.getConeAngle());
+            spotLightShader.loadDirection(spotLight.getDirection());
+            spotLightShader.loadSpotLightPosition(spotLight.getPosition());
+            GL11.glDrawArrays(GL11.GL_TRIANGLES, 0, 6);
+
+        }
+        GL20.glDisableVertexAttribArray(0);
+        GL30.glBindVertexArray(0);
+        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+
+        spotLightShader.stop();
     }
 
     public void renderPointLights(List<PointLight> pointLights, Camera camera) {
